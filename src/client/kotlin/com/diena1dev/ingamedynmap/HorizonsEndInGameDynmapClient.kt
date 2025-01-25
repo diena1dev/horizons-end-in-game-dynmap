@@ -40,11 +40,10 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 
 class HEBrowser(title: Text) : Screen(title) {
 	override fun init() {
-		val url = "https:survival.horizonsend.net"
+		val url = "https://youtube.com	"
 		val client = com.cinemamod.mcef.MCEF.getClient()
-		com.cinemamod.mcef.MCEFBrowser(client, url, false)
-		com.cinemamod.mcef.MCEF.createBrowser(url, false, 10, 20)
-
+		//com.cinemamod.mcef.MCEFBrowser(client, url, false)
+		com.cinemamod.mcef.MCEF.createBrowser(url, false)
 	}
 }
 
