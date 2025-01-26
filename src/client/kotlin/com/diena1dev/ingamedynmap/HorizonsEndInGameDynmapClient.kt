@@ -1,5 +1,6 @@
 package com.diena1dev.ingamedynmap
 
+import com.cinemamod.mcef.MCEFBrowser
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
@@ -7,10 +8,10 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.render.Tessellator
 import net.minecraft.client.util.InputUtil
 import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
+
 
 // -- Keybindings + Tick Event Registration --
 
@@ -41,17 +42,57 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 
 // -- In-Game Browser Renderer --
 
+// class
+
 class HEBrowser(title: Text, url: String) : Screen(title) {
 	override fun init() {
+
+		val BROWSER_DRAW_OFFSET = 20
+		val minecraft = MinecraftClient.getInstance()
+		val browser: MCEFBrowser? = null
+
 		val client = com.cinemamod.mcef.MCEF.getClient()
 		var url: String = "https://survival.horizonsend.net"
-		com.cinemamod.mcef.MCEF.createBrowser(url, true)
-		
-		fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
-			super.render(context, mouseX, mouseY, delta)
-
-			context.drawBorder(10, 10, 100, 50, 3)
+		com.cinemamod.mcef.MCEF.createBrowser(url, false)
+		if (browser != null) {
+			resizeBrowser(browser)
 		}
+	}
+
+	// variables
+
+	private fun mouseX(x: Double, BROWSER_DRAW_OFFSET: Int, minecraft: MinecraftClient): Double {
+		return ((x - BROWSER_DRAW_OFFSET) * minecraft.getWindow().getScaleFactor())
+	}
+
+	private fun mouseY(y: Double, BROWSER_DRAW_OFFSET: Int, minecraft: MinecraftClient): Double {
+		return ((y - BROWSER_DRAW_OFFSET) * minecraft.getWindow().getScaleFactor())
+	}
+
+	private fun scaleX(x: Double, BROWSER_DRAW_OFFSET: Int, minecraft: MinecraftClient): Double {
+		return ((x - BROWSER_DRAW_OFFSET * 2) * minecraft.getWindow().getScaleFactor())
+	}
+
+	private fun scaleY(y: Double, BROWSER_DRAW_OFFSET: Int, minecraft: MinecraftClient): Double {
+		return ((y - BROWSER_DRAW_OFFSET * 2) * minecraft.getWindow().getScaleFactor())
+	}
+
+	// functions
+
+fun resizeBrowser(browser: MCEFBrowser) {
+		if (width > 100 && height > 100) {
+			browser.resize(100, 200)
+			resizeBrowser(browser)
+		}
+	}
+
+	// rendering
+
+	override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+		super.render(context, mouseX, mouseY, delta)
+
+		context.drawBorder(10, 10, 400, 200, 0xFFFF000)
+		context.fill(11, 1, 398, 198, 0xFF00FF0)
 
 	}
 }
@@ -59,31 +100,26 @@ class HEBrowser(title: Text, url: String) : Screen(title) {
 
 
 // testing below
-
-/*
-
-
-class HEBrowser(title: Text, url: String) : Screen(title) {
+/*class HEBrowser(title: Text, url: String) : Screen(title) {
 	override fun init() {
 			super.init();
 				val url = "https://www.google.com"
 				val transparent = true
 				val browser = com.cinemamod.mcef.MCEF.createBrowser(url, transparent)
-				resizeBrowser()
+				//resizeBrowser()
+	}
 
-		fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
-			super.render(context, mouseX, mouseY, delta)
+	override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+		super.render(context, mouseX, mouseY, delta)
 
-			context.drawBorder(10, 10, 100, 50, 3)
-		}
-
+		context.drawBorder(10, 10, 100, 50, 3)
 	}
 }
+*/
 
 
 
-
-class CustomScreen(title: Text?) : Screen(title) {
+/*class CustomScreen(title: Text?) : Screen(title) {
 	override fun init() {
 		val buttonWidget: ButtonWidget = ButtonWidget.builder(Text.of("Hello World")) { btn ->
 			// When the button is clicked, we can display a toast to the screen.
