@@ -1,9 +1,16 @@
 {
 	"required": true,
-	"package": "com.diena1dev.ingamedynmap.mixin.client",
-	"compatibilityLevel": "JAVA_21",
+	"minVersion": "0.8",
+	"package": "com.cinemamod.mcef.mixins",
+	"compatibilityLevel": "JAVA_17",
+	"refmap": "mcef.refmap.json",
+	"mixins": [
+	],
 	"client": [
-		"HEDynmapMixin"
+		"CefDownloadMixin",
+		"CefInitMixin",
+		"CefRenderUpdateMixin",
+		"CefWindowsShutdownMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -13,3 +13,4 @@ public class HEDynmapMixin {
 		// This code is injected into the start of MinecraftClient.run()V
 	}
 }
+

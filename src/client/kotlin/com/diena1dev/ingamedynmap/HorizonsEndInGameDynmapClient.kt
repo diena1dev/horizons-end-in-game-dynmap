@@ -1,21 +1,18 @@
 package com.diena1dev.ingamedynmap
 
-import com.cinemamod.mcef.*
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.gui.widget.ButtonWidget
 import net.minecraft.client.option.KeyBinding
-import net.minecraft.client.realms.task.LongRunningTask.setScreen
-import net.minecraft.client.render.*
-import net.minecraft.client.toast.SystemToast
+import net.minecraft.client.render.Tessellator
 import net.minecraft.client.util.InputUtil
 import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 
+// -- Keybindings + Tick Event Registration --
 
 object HorizonsEndInGameDynmapClient : ClientModInitializer {
 	override fun onInitializeClient() {
@@ -31,25 +28,61 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
 			while (openInGameDynmap.wasPressed()) {
 				MinecraftClient.getInstance().setScreen(
-					HEBrowser(Text.empty())
+					HEBrowser(Text.empty(), "https://youtube.com")
 				);
 			}
 		})
 	}
 }
 
-class HEBrowser(title: Text) : Screen(title) {
+// -- Variables --
+
+// nothing yet!
+
+// -- In-Game Browser Renderer --
+
+class HEBrowser(title: Text, url: String) : Screen(title) {
 	override fun init() {
-		val url = "https://youtube.com	"
 		val client = com.cinemamod.mcef.MCEF.getClient()
-		//com.cinemamod.mcef.MCEFBrowser(client, url, false)
-		com.cinemamod.mcef.MCEF.createBrowser(url, false)
+		var url: String = "https://survival.horizonsend.net"
+		com.cinemamod.mcef.MCEF.createBrowser(url, true)
+		
+		fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+			super.render(context, mouseX, mouseY, delta)
+
+			context.drawBorder(10, 10, 100, 50, 3)
+		}
+
 	}
 }
+
+
 
 // testing below
 
 /*
+
+
+class HEBrowser(title: Text, url: String) : Screen(title) {
+	override fun init() {
+			super.init();
+				val url = "https://www.google.com"
+				val transparent = true
+				val browser = com.cinemamod.mcef.MCEF.createBrowser(url, transparent)
+				resizeBrowser()
+
+		fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
+			super.render(context, mouseX, mouseY, delta)
+
+			context.drawBorder(10, 10, 100, 50, 3)
+		}
+
+	}
+}
+
+
+
+
 class CustomScreen(title: Text?) : Screen(title) {
 	override fun init() {
 		val buttonWidget: ButtonWidget = ButtonWidget.builder(Text.of("Hello World")) { btn ->
