@@ -2,6 +2,8 @@ package com.diena1dev.ingamedynmap
 
 import com.cinemamod.mcef.MCEF
 import com.cinemamod.mcef.MCEFBrowser
+import com.cinemamod.mcef.MCEFClient
+import com.cinemamod.mcef.MCEFPlatform
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
@@ -10,6 +12,7 @@ import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.gui.screen.Screen
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
+import net.minecraft.screen.ScreenHandler
 import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 
@@ -47,15 +50,15 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 
 class HEBrowser(title: Text) : Screen(title) {
 	override fun init() {
-		MCEF.createBrowser(url, false)
-			//resizeBrowser(browser)
+		//render(, 20, 20, 1f)
+		//resizeBrowser(browser)
 	}
 
 	// variables
 
 	private val client = com.cinemamod.mcef.MCEF.getClient()
-	private val browser: MCEFBrowser? = null
-	private var url = "https://youtube.com"
+	private val browser: MCEFBrowser = MCEF.createBrowser("https://google.com", false)
+	var url = "https://youtube.com"
 
 	val minecraft = MinecraftClient.getInstance()
 	val BROWSER_DRAW_OFFSET = 20
@@ -78,10 +81,9 @@ class HEBrowser(title: Text) : Screen(title) {
 
 	// functions
 
-fun resizeBrowser(browser: MCEFBrowser) {
+	fun resizeBrowser(browser: MCEFBrowser) {
 		if (width > 100 && height > 100) {
 			browser.resize(100, 200)
-			resizeBrowser(browser)
 		}
 	}
 
@@ -91,7 +93,9 @@ fun resizeBrowser(browser: MCEFBrowser) {
 		super.render(context, mouseX, mouseY, delta)
 		context.drawBorder(10, 10, 400, 200, 0xFFFF000)
 		context.fill(11, 11, 400, 200, 0xFF00FF0)
-		browser!!.resize(200,100)
+		MCEF.createBrowser(url, false, 300, 250)
+		//resizeBrowser(this.browser)
+		println(browser.getSource {  })
 
 	}
 }
