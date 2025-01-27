@@ -89,10 +89,9 @@ fun resizeBrowser(browser: MCEFBrowser) {
 
 	override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
 		super.render(context, mouseX, mouseY, delta)
-		com.cinemamod.mcef.MCEF.initialize()
 		context.drawBorder(10, 10, 400, 200, 0xFFFF000)
 		context.fill(11, 11, 400, 200, 0xFF00FF0)
-		//browser!!.resize(200,100)
+		browser!!.resize(200,100)
 
 	}
 }
