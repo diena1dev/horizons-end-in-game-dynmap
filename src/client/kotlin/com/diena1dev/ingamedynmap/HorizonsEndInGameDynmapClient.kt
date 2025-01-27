@@ -1,5 +1,6 @@
 package com.diena1dev.ingamedynmap
 
+import com.cinemamod.mcef.MCEF
 import com.cinemamod.mcef.MCEFBrowser
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
@@ -29,7 +30,7 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
 			while (openInGameDynmap.wasPressed()) {
 				MinecraftClient.getInstance().setScreen(
-					HEBrowser(Text.empty(), "https://youtube.com")
+					HEBrowser(Text.empty())
 				);
 			}
 		})
@@ -44,22 +45,20 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 
 // class
 
-class HEBrowser(title: Text, url: String) : Screen(title) {
+class HEBrowser(title: Text) : Screen(title) {
 	override fun init() {
-
-		val BROWSER_DRAW_OFFSET = 20
-		val minecraft = MinecraftClient.getInstance()
-		val browser: MCEFBrowser? = null
-
-		val client = com.cinemamod.mcef.MCEF.getClient()
-		var url: String = "https://survival.horizonsend.net"
-		com.cinemamod.mcef.MCEF.createBrowser(url, false)
-		if (browser != null) {
-			resizeBrowser(browser)
-		}
+		MCEF.createBrowser(url, false)
+			//resizeBrowser(browser)
 	}
 
 	// variables
+
+	private val client = com.cinemamod.mcef.MCEF.getClient()
+	private val browser: MCEFBrowser? = null
+	private var url = "https://youtube.com"
+
+	val minecraft = MinecraftClient.getInstance()
+	val BROWSER_DRAW_OFFSET = 20
 
 	private fun mouseX(x: Double, BROWSER_DRAW_OFFSET: Int, minecraft: MinecraftClient): Double {
 		return ((x - BROWSER_DRAW_OFFSET) * minecraft.getWindow().getScaleFactor())
@@ -90,9 +89,10 @@ fun resizeBrowser(browser: MCEFBrowser) {
 
 	override fun render(context: DrawContext, mouseX: Int, mouseY: Int, delta: Float) {
 		super.render(context, mouseX, mouseY, delta)
-
+		com.cinemamod.mcef.MCEF.initialize()
 		context.drawBorder(10, 10, 400, 200, 0xFFFF000)
-		context.fill(11, 1, 398, 198, 0xFF00FF0)
+		context.fill(11, 11, 400, 200, 0xFF00FF0)
+		//browser!!.resize(200,100)
 
 	}
 }
