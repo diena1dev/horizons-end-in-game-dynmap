@@ -6,10 +6,12 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
-import net.minecraft.enchantment.EnchantmentHelper.onTick
+import HEBrowser
 import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 
+// TODO: "if" check for existing browser instance for persistence, focus of browser window.
+// TODO: event listener for leaving a world/disconnecting from a server, would terminate existing CEF processes.
 
 // -- Keybindings + Tick Event Registration --
 
@@ -20,7 +22,7 @@ class HEDynmapClient():ClientModInitializer {
 
 }
 
-val MineCraftClient = MinecraftClient.getInstance()
+val minecraftClientInstance: MinecraftClient = MinecraftClient.getInstance()
 
 object HorizonsEndInGameDynmapClient : ClientModInitializer {
 	override fun onInitializeClient() {
@@ -35,9 +37,10 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 
 		ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
 			while (openInGameDynmap.wasPressed()) {
-				MinecraftClient.getInstance().setScreen(
-					HEBrowser(Text.literal("test")) // TODO: FIX SCREEN CREATION
-				);
+				minecraftClientInstance.setScreen(
+					HEBrowser(
+					Text.literal("test") // TODO: FIX SCREEN CREATION, FIXED.
+				));
 			}
 		})
 	}
