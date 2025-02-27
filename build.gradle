@@ -29,8 +29,8 @@ loom {
 
 	mods {
 		"horizons-end-in-game-dynmap" {
-			sourceSet sourceSets.main
 			sourceSet sourceSets.client
+			sourceSet sourceSets.main
 		}
 	}
 

@@ -1,11 +1,11 @@
 {
 	"schemaVersion": 1,
 	"id": "horizons-end-in-game-dynmap",
-	"version": "${version}",
+	"version": "0.1.0",
 	"name": "Horizons End In-Game Dynmap",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "A map and wiki utility for the Minecraft Server Horizon's End!",
 	"authors": [
-		"Me!"
+		"diena1dev, the Crow :3"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",

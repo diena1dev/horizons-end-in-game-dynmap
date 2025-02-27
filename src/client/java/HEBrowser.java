@@ -25,11 +25,18 @@ public class HEBrowser extends Screen {
         super(title);
     }
 
+    public String lastURL;
+
     @Override
     protected void init() {
         super.init();
+        if (lastURL == null) {
+            lastURL = "https://survival.horizonsend.net";
+        } else {
+            return;
+        }
         if (browser == null) {
-            String url = "https://survival.horizonsend.net";
+            String url = lastURL;
             boolean transparent = true;
             browser = MCEF.createBrowser(url, transparent);
             resizeBrowser();
@@ -66,7 +73,9 @@ public class HEBrowser extends Screen {
 
     @Override
     public void close() {
-        browser.close();
+        lastURL = browser.getURL();
+        //browser.close();
+        browser.setFocus(false);
         super.close();
     }
 
@@ -101,6 +110,7 @@ public class HEBrowser extends Screen {
     @Override
     public void mouseMoved(double mouseX, double mouseY) {
         browser.sendMouseMove(mouseX(mouseX), mouseY(mouseY));
+        lastURL = browser.getURL();
         super.mouseMoved(mouseX, mouseY);
     }
 
@@ -109,10 +119,10 @@ public class HEBrowser extends Screen {
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
 
-
-    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-        browser.sendMouseWheel(mouseX(mouseX), mouseY(mouseY), delta, 0);
-        return super.mouseScrolled(mouseX, mouseY, delta, 0);
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double verticalAmount, double horizontalAmount) {
+        browser.sendMouseWheel(mouseX(mouseX), mouseY(mouseY), horizontalAmount, 0);
+        return super.mouseScrolled(mouseX, mouseY, verticalAmount, horizontalAmount);
     }
 
     @Override
