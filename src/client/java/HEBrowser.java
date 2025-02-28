@@ -1,29 +1,26 @@
 import com.cinemamod.mcef.MCEF;
 import com.cinemamod.mcef.MCEFBrowser;
-import com.mojang.blaze3d.systems.RenderCall;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.ShaderLoader;
 import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.gl.ShaderProgram;
-import net.minecraft.client.render.debug.GameEventDebugRenderer;
-import net.minecraft.client.render.debug.GameTestDebugRenderer;
 import net.minecraft.text.Text;
 
 public class HEBrowser extends Screen {
     private static final int BROWSER_DRAW_OFFSET = 10;
 
-    private MCEFBrowser browser;
-
     private final MinecraftClient minecraft = MinecraftClient.getInstance();
 
-    public HEBrowser(Text title) {
+    public Boolean didStartStatus;
+
+    public HEBrowser(Text title, MCEFBrowser browserMaster) {
         super(title);
+        browser = browserMaster;
     }
+
+    public MCEFBrowser browser;
 
     public String lastURL;
 
@@ -36,9 +33,11 @@ public class HEBrowser extends Screen {
             return;
         }
         if (browser == null) {
-            String url = lastURL;
-            boolean transparent = true;
-            browser = MCEF.createBrowser(url, transparent);
+            String url = "https://survival.horizonsend.net";
+            boolean trans = true;
+            browser = MCEF.createBrowser(url, trans);
+            resizeBrowser();
+        } else {
             resizeBrowser();
         }
     }
@@ -74,8 +73,6 @@ public class HEBrowser extends Screen {
     @Override
     public void close() {
         lastURL = browser.getURL();
-        //browser.close();
-        browser.setFocus(false);
         super.close();
     }
 
