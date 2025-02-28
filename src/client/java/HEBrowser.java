@@ -92,10 +92,15 @@ public class HEBrowser extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        browser.sendMousePress(mouseX(mouseX), mouseY(mouseY), button);
-        browser.setFocus(true);
-        return super.mouseClicked(mouseX, mouseY, button);
+        if (button == 0) {
+            browser.sendMousePress(mouseX(mouseX), mouseY(mouseY), button);
+            browser.setFocus(true);
+        } if (button == 1) {
+            // browser.find(); // Find coordinates on page, copy them
+            this.addDrawableChild(new HEBrowserContextMenu((int) mouseX, (int) mouseY,30, 15, browser));
+        } return super.mouseClicked(mouseX, mouseY, button); // Not functioning as yet, soon though!
     }
+    // 0 is printed for left click, 1 for right click. make this an IF statement with the Widget class callable on right click, closed on left.
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {

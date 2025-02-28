@@ -30,6 +30,16 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 		)
 		// The above sets the keybind to open the Dynmap Screen.
 
+		val refreshInGameDynmap = KeyBindingHelper.registerKeyBinding(
+			KeyBinding(
+				"Refresh Dynmap (When Frozen)",
+				InputUtil.Type.KEYSYM,
+				GLFW.GLFW_KEY_R,
+				"Crow's Magic Additions :3"
+			)
+		)
+		// The above refreshes the browser if it ever hangs.
+
 		MCEF.initialize()
 		var url = "https://survival.horizonsend.net"
 		var transparent: Boolean = true
@@ -41,6 +51,9 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 					HEBrowser(
 						Text.literal("test"), browserMaster
 					))
+			}
+			while (refreshInGameDynmap.wasPressed()) {
+				browserMaster.reload()
 			}
 		})
 		// The above creates the Dynmap Screen whenever that keybind is pressed.
