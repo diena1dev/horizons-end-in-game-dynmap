@@ -10,6 +10,6 @@ object HorizonsEndInGameDynmap : ModInitializer {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-		logger.info("Hello Fabric world!")
+		logger.info("Hiya from the Crow! (If this shows, the mod started correctly :3)!")
 	}
 }

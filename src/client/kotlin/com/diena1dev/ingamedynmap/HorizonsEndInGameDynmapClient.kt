@@ -25,7 +25,7 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 				"Open Dynmap",
 				InputUtil.Type.KEYSYM,
 				GLFW.GLFW_KEY_M,
-				"HE In-Game Dynmap"
+				"Crow's Magic Additions :3"
 			)
 		)
 		// The above sets the keybind to open the Dynmap Screen.
@@ -34,7 +34,6 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 		var url = "https://survival.horizonsend.net"
 		var transparent: Boolean = true
 		var browserMaster: MCEFBrowser = MCEF.createBrowser(url, transparent)
-		var didStart: Boolean = false
 
 		ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
 			while (openInGameDynmap.wasPressed()) {
@@ -45,10 +44,5 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 			}
 		})
 		// The above creates the Dynmap Screen whenever that keybind is pressed.
-
-		if (didStart == false) {
-			didStart = true
-		}
-
 	}
 }
