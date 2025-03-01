@@ -13,8 +13,6 @@ public class HEBrowser extends Screen {
 
     private final MinecraftClient minecraft = MinecraftClient.getInstance();
 
-    public Boolean didStartStatus;
-
     public HEBrowser(Text title, MCEFBrowser browserMaster) {
         super(title);
         browser = browserMaster;

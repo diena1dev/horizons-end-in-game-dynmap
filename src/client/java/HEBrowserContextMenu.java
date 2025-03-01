@@ -18,16 +18,16 @@ public class HEBrowserContextMenu extends ClickableWidget {
     @Override
     protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         int color = 0xFFFFFFFF; // WHITE lol
-
         final MinecraftClient client = MinecraftClient.getInstance();
+
 
         context.fill(getX(), getY(), getX() + this.width, getY() + this.height, color);
         context.drawText(client.textRenderer, "test", getX(), getY(), 16, false);
-        if (ClickEvent.Action.RUN_COMMAND.isUserDefinable()) {
+        /*if (ClickEvent.Action.RUN_COMMAND.isUserDefinable()) {
             //System.out.println("Click FOUND!"); // Spammy, does not detect clicks.
             localBrowser.find("Location:", true, true, false);
             localBrowser.stopFinding(false);
-        }
+        }*/ // Play around with different click methods.... This will work, just have to give it time.
     }
 
 

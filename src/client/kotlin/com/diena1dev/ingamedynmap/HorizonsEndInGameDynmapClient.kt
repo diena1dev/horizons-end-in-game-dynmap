@@ -7,8 +7,12 @@ import net.minecraft.client.MinecraftClient
 import net.minecraft.client.option.KeyBinding
 import net.minecraft.client.util.InputUtil
 import HEBrowser
+import HudRenderingEntrypoint
 import com.cinemamod.mcef.MCEF
 import com.cinemamod.mcef.MCEFBrowser
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
+import net.minecraft.client.gui.LayeredDrawer
+import net.minecraft.client.render.entity.equipment.EquipmentModel
 import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
 
@@ -44,6 +48,13 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 		var url = "https://survival.horizonsend.net"
 		var transparent: Boolean = true
 		var browserMaster: MCEFBrowser = MCEF.createBrowser(url, transparent)
+
+		HudRenderCallback.EVENT.register { drawContext, tickCounter -> {
+			while (minecraftClientInstance.isRunning) {
+				HudRenderingEntrypoint(browserMaster)
+			}
+		} }
+		//HudLayerRegistrationCallback.EVENT.register(layeredDrawer -> layeredDrawer.attachLayerBefore(IdentifiedLayer.CHAT, EXAMPLE_LAYER, HudRenderingEntrypoint::render))
 
 		ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
 			while (openInGameDynmap.wasPressed()) {
