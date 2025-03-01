@@ -1,4 +1,7 @@
 # --= In-Game Dynmap for Horizon's End =--
+
+# IMPORTANT: Until I update the mod to fix this, install MCEF and launch your game *once* fully, before installing this mod!
+
 Utilizes the MCEF Example Mod for rendering the browser, depends on the MCEF mod.
 
 ### Version 0.2.1
