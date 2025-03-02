@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "horizons-end-in-game-dynmap",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"name": "Horizons End In-Game Dynmap",
 	"description": "A map and wiki utility for the Minecraft Server Horizon's End!",
 	"authors": [
