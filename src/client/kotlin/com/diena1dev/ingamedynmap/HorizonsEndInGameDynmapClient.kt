@@ -46,6 +46,9 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 		var url = "https://survival.horizonsend.net"
 		var transparent: Boolean = true
 		var browserMaster: MCEFBrowser = MCEF.createBrowser(url, transparent)
+		if (MCEF.isInitialized() != false) {
+			browserMaster = MCEF.createBrowser(url, transparent)
+		}
 
 		HudRenderCallback.EVENT.register { drawContext, tickCounter -> HEBrowserHUD(browserMaster, drawContext) }
 		//HudLayerRegistrationCallback.EVENT.register(layeredDrawer -> layeredDrawer.attachLayerBefore(IdentifiedLayer.CHAT, EXAMPLE_LAYER, HEBrowserHUD::renderHUD))
@@ -58,7 +61,8 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 					))
 			}
 			while (refreshInGameDynmap.wasPressed()) {
-				browserMaster.reload()
+				MCEF.shutdown()
+				MCEF.initialize()
 			}
 		})
 		// The above creates the Dynmap Screen whenever that keybind is pressed.
