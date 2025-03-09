@@ -20,7 +20,8 @@ public class HEBrowserHUD implements HudRenderCallback {
     public Integer BROWSER_DRAW_OFFSET = 2;
     public Integer width = 0;
     public Integer height = 0;
-    public Integer scaleFactor = 100;
+    public Integer scaleFactor = 100; // MAKE THIS A CONFIG SLIDER
+    public Integer transparencyLevel = 255; // THIS TOO!
 
     private int scaleX(double x) {
         return (int) ((x - BROWSER_DRAW_OFFSET * 2) * minecraft.getWindow().getScaleFactor());
@@ -49,10 +50,10 @@ public class HEBrowserHUD implements HudRenderCallback {
 
         Tessellator t = Tessellator.getInstance();
         BufferBuilder buffer = t.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-        buffer.vertex(1, scaleFactor, 0).texture(0.25f, 0.0f).color(255, 255, 255, 255); // bottom left
-        buffer.vertex(scaleFactor, scaleFactor, 0).texture(0.75f, 0.0f).color(255, 255, 255, 255); // bottom right
-        buffer.vertex(scaleFactor,1, 0).texture(0.75f, 1.0f).color(255, 255, 255, 255); // top right
-        buffer.vertex(1, 1, 0).texture(0.25f, 1.0f).color(255, 255, 255, 255); // top left
+        buffer.vertex(1, scaleFactor, 0).texture(0.25f, 1.0f).color(255, 255, 255, transparencyLevel); // bottom left
+        buffer.vertex(scaleFactor, scaleFactor, 0).texture(0.75f, 1.0f).color(255, 255, 255, transparencyLevel); // bottom right
+        buffer.vertex(scaleFactor,1, 0).texture(0.75f, 0.0f).color(255, 255, 255, transparencyLevel); // top right
+        buffer.vertex(1, 1, 0).texture(0.25f, 0.0f).color(255, 255, 255, transparencyLevel); // top left
         BufferRenderer.drawWithGlobalProgram(buffer.end());
     }
 }
