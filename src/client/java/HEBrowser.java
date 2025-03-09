@@ -35,6 +35,7 @@ public class HEBrowser extends Screen {
             boolean trans = true;
             browser = MCEF.createBrowser(url, trans);
             resizeBrowser();
+            browser.setZoomLevel(2);
         } else {
             resizeBrowser();
         }
@@ -79,6 +80,7 @@ public class HEBrowser extends Screen {
         super.render(guiGraphics, i, j, f);
         RenderSystem.setShader(ShaderProgramKeys.POSITION_TEX_COLOR);
         RenderSystem.setShaderTexture(0, browser.getRenderer().getTextureID());
+
         Tessellator t = Tessellator.getInstance();
         BufferBuilder buffer = t.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);;
         buffer.vertex(BROWSER_DRAW_OFFSET, height - BROWSER_DRAW_OFFSET, 0).texture(0.0f, 1.0f).color(255, 255, 255, 255);

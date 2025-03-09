@@ -22,6 +22,7 @@ val minecraftClientInstance: MinecraftClient = MinecraftClient.getInstance()
 object HorizonsEndInGameDynmapClient : ClientModInitializer {
 
 	override fun onInitializeClient() {
+
 		val openInGameDynmap = KeyBindingHelper.registerKeyBinding(
 			KeyBinding(
 				"Open Dynmap",
@@ -50,7 +51,7 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 			browserMaster = MCEF.createBrowser(url, transparent)
 		}
 
-		HudRenderCallback.EVENT.register { drawContext, tickCounter -> HEBrowserHUD(browserMaster, drawContext) }
+		HudRenderCallback.EVENT.register(HEBrowserHUD(browserMaster))
 		//HudLayerRegistrationCallback.EVENT.register(layeredDrawer -> layeredDrawer.attachLayerBefore(IdentifiedLayer.CHAT, EXAMPLE_LAYER, HEBrowserHUD::renderHUD))
 
 		ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
