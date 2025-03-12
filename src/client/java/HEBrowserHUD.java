@@ -7,7 +7,11 @@ import net.minecraft.client.render.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO: HUD Rendering needs to be implemented.
+// DONE: HUD Rendering needs to be implemented.
+// and it has, so that's nice- issue is it's not ideal
+// TODO: HUD Scale, Transparency, Toggles.
+// TODO: OH! I could change the alpha value to 0 to "turn it off"!
+// TODO: Not the most ideal, but it will work! :D
 
 
 public class HEBrowserHUD implements HudRenderCallback {
