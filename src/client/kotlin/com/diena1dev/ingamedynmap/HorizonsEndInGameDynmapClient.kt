@@ -13,9 +13,11 @@ import com.cinemamod.mcef.MCEFBrowser
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 import net.minecraft.text.Text
 import org.lwjgl.glfw.GLFW
+import org.slf4j.LoggerFactory
 
-// TODO: "if" check for existing browser instance for persistence, focus of browser window.
 // TODO: event listener for leaving a world/disconnecting from a server, would terminate existing CEF processes.
+
+// TODO: CRITICAL - Move keybindings to a seperate object, clean up this file.
 
 val minecraftClientInstance: MinecraftClient = MinecraftClient.getInstance()
 
@@ -23,36 +25,31 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 
 	override fun onInitializeClient() {
 
+		val logger = LoggerFactory.getLogger("HEDynMap");
+
 		val openInGameDynmap = KeyBindingHelper.registerKeyBinding(
-			KeyBinding(
-				"Open Dynmap",
-				InputUtil.Type.KEYSYM,
-				GLFW.GLFW_KEY_M,
-				"Crow's Magic Additions :3"
-			)
-		)
-		// The above sets the keybind to open the Dynmap Screen.
+			KeyBinding("Open Dynmap", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_X, "Crow's Magic Additions :3")
+		) // opens fullscreen map
+
+		val toggleHUDMap = KeyBindingHelper.registerKeyBinding(
+			KeyBinding("Toggle HUD Map", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H, "Crow's Magic Additions :3")
+		) // toggles HUD minimap
 
 		val refreshInGameDynmap = KeyBindingHelper.registerKeyBinding(
-			KeyBinding(
-				"Refresh Dynmap (When Frozen)",
-				InputUtil.Type.KEYSYM,
-				GLFW.GLFW_KEY_R,
-				"Crow's Magic Additions :3"
-			)
-		)
-		// The above refreshes the browser if it ever hangs.
+			KeyBinding("Refresh Dynmap (When Frozen)", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_BACKSLASH, "Crow's Magic Additions :3")
+		) // reloads browser when frozen
 
 		MCEF.initialize()
 		var url = "https://survival.horizonsend.net"
-		var transparent: Boolean = true
+		var transparent= true
 		var browserMaster: MCEFBrowser = MCEF.createBrowser(url, transparent)
 		if (MCEF.isInitialized() != false) {
 			browserMaster = MCEF.createBrowser(url, transparent)
 		}
+		var isMinimapOn = true
 
-		HudRenderCallback.EVENT.register(HEBrowserHUD(browserMaster))
-		//HudLayerRegistrationCallback.EVENT.register(layeredDrawer -> layeredDrawer.attachLayerBefore(IdentifiedLayer.CHAT, EXAMPLE_LAYER, HEBrowserHUD::renderHUD))
+		HudRenderCallback.EVENT.register(HEBrowserHUD(browserMaster, isMinimapOn))
+		// Registers and adds the minimap HUD element to the screen
 
 		ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
 			while (openInGameDynmap.wasPressed()) {
@@ -61,11 +58,18 @@ object HorizonsEndInGameDynmapClient : ClientModInitializer {
 						Text.literal("test"), browserMaster
 					))
 			}
+
 			while (refreshInGameDynmap.wasPressed()) {
-				MCEF.shutdown()
-				MCEF.initialize()
-			}
+				browserMaster.reload()
+			} // reloads, not refreshes browser
+			// to refresh, add a check to see if the HUD is toggled to "true", if so then disable HUD, shutdown and initialize,
+			// set HUD back to previous variable.
+
+			while (toggleHUDMap.wasPressed()) {
+				isMinimapOn = if (isMinimapOn == false) { true } else { false }
+				logger.info(isMinimapOn.toString(), "from keybind")
+				HEBrowserHUD(browserMaster, isMinimapOn)
+			} // toggles minimap rendering
 		})
-		// The above creates the Dynmap Screen whenever that keybind is pressed.
 	}
 }

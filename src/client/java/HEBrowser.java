@@ -25,11 +25,6 @@ public class HEBrowser extends Screen {
     @Override
     protected void init() {
         super.init();
-        if (lastURL == null) {
-            lastURL = "https://survival.horizonsend.net";
-        } else {
-            return;
-        }
         if (browser == null) {
             String url = "https://survival.horizonsend.net";
             boolean trans = true;
