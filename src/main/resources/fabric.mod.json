@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "horizons-end-in-game-dynmap",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"name": "Horizons End In-Game Dynmap",
 	"description": "A map and wiki utility for the Minecraft Server Horizon's End!",
 	"authors": [
@@ -36,11 +36,12 @@
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.16.10",
+		"fabricloader": ">=0.16.9",
 		"minecraft": "~1.21.4",
 		"java": ">=21",
 		"fabric-api": "*",
-		"fabric-language-kotlin": "*"
+		"fabric-language-kotlin": "*",
+		"mcef": "*"
 	},
 	"suggests": {
 		"another-mod": "*"

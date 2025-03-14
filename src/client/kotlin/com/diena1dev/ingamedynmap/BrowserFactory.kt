@@ -5,33 +5,27 @@ import com.cinemamod.mcef.MCEFBrowser
 import com.diena1dev.ingamedynmap.HorizonsEndInGameDynmapClient.game
 
 object BrowserFactory {
-    lateinit var browser: MCEFBrowser
     lateinit var url: String
-    var transparent: Boolean = true
+    val transparent: Boolean = true
+    lateinit var browser: MCEFBrowser
 
     fun init() {
-        if (MCEF.isInitialized() == false) {
+        if (!MCEF.isInitialized()) {
             MCEF.initialize()
+        } else if (MCEF.isInitialized()) {
+           println("empty for now")
         }
-        transparent = false
         url = "https://survival.horizonsend.net"
         browser = MCEF.createBrowser(url, transparent)
-        /* if (browser == null) {
-            transparent = false
-            url = ""
-            MCEF.initialize()
-            browser = MCEF.createBrowser(url, transparent)
-        }*/
     }   // Creation of browser, called upon mod init - TODO: add a function to return the persistent // TODO: browser, or add an if under init for grabbing the variable for the RenderFactory
 
-    @Suppress("unused")
-    class BrowserHandler() {
+    object BrowserTools {
 
         fun mouseX(x: Double): Double {
             return (x * game.window.scaleFactor)
         }
 
-        fun scaleX(x: Int): Double {
+        fun scaleX(x: Float): Double {
             return ((x * 2) * game.window.scaleFactor)
         }
 
@@ -39,20 +33,15 @@ object BrowserFactory {
             return (y * game.window.scaleFactor)
         }
 
-        fun scaleY(y: Int): Double {
+        fun scaleY(y: Float): Double {
             return ((y * 2) * game.window.scaleFactor)
         }
 
-        /*@Suppress("unused")
+        @Suppress("unused")
         fun resizeBrowser() {
             if (windowWidth > 100 && windowHeight > 100) {
                 browser.resize(scaleX(windowWidth).toInt(), scaleY(windowHeight).toInt())
             }
-        }*/
-
-        fun actuallyResizeNow() {
-            //resizeBrowser()
-            actuallyResizeNow()
         }
 
         fun mouseClicked(mouseX: Double, mouseY: Double, button: Int): Boolean {

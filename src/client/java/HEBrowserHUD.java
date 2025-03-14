@@ -16,9 +16,8 @@ import org.slf4j.LoggerFactory;
 
 public class HEBrowserHUD implements HudRenderCallback {
 
-    public HEBrowserHUD(MCEFBrowser browserMaster, boolean isMinimapOn) {
+    public HEBrowserHUD(MCEFBrowser browserMaster) {
         browser = browserMaster;
-        isMinimapOnLocal = isMinimapOn;
         logger.info("logged update");
         logger.info(String.valueOf(isMinimapOnLocal));
     }
@@ -33,7 +32,6 @@ public class HEBrowserHUD implements HudRenderCallback {
 
     @Override
     public void onHudRender(DrawContext drawContext, RenderTickCounter tickCounter) {
-        if (isMinimapOnLocal) {
             RenderSystem.setShader(ShaderProgramKeys.POSITION_TEX_COLOR);
             RenderSystem.setShaderTexture(0, browser.getRenderer().getTextureID());
 
@@ -44,10 +42,5 @@ public class HEBrowserHUD implements HudRenderCallback {
             buffer.vertex(scaleFactor, 1, 0).texture(0.75f, 0.0f).color(255, 255, 255, transparencyLevel); // top right
             buffer.vertex(1, 1, 0).texture(0.25f, 0.0f).color(255, 255, 255, transparencyLevel); // top left
             BufferRenderer.drawWithGlobalProgram(buffer.end());
-            logger.info(String.valueOf(isMinimapOnLocal));
-        } else {
-            BufferRenderer.reset();
-            logger.info("actually did something");
         }
     }
-}

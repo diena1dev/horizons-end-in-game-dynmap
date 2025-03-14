@@ -8,6 +8,8 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.*;
 import net.minecraft.text.Text;
 
+import static com.diena1dev.ingamedynmap.BrowserFactory.browser;
+
 public class HEBrowser extends Screen {
     private static final int BROWSER_DRAW_OFFSET = 10;
 
@@ -15,22 +17,22 @@ public class HEBrowser extends Screen {
 
     public HEBrowser(Text title, MCEFBrowser browserMaster) {
         super(title);
-        browser = browserMaster;
+        browser1 = browserMaster;
     }
 
-    public MCEFBrowser browser;
+    public MCEFBrowser browser1;
 
     public String lastURL;
 
     @Override
     protected void init() {
         super.init();
-        if (browser == null) {
-            String url = "https://survival.horizonsend.net";
+        if (browser1 == null) {
+            /*String url = "https://survival.horizonsend.net";
             boolean trans = true;
             browser = MCEF.createBrowser(url, trans);
             resizeBrowser();
-            browser.setZoomLevel(2);
+            browser.setZoomLevel(2);*/
         } else {
             resizeBrowser();
         }
@@ -68,6 +70,7 @@ public class HEBrowser extends Screen {
     public void close() {
         lastURL = browser.getURL();
         super.close();
+        resizeBrowser();
     }
 
     @Override

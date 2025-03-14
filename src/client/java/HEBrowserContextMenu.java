@@ -30,6 +30,8 @@ public class HEBrowserContextMenu extends ClickableWidget {
         }*/ // Play around with different click methods.... This will work, just have to give it time.
     }
 
+    // TODO: RENDER THE BLOCK BEHIND THE TEXT AS A TEXTURE, should set it to a higher render layer with the context too!
+
 
     @Override
     protected void appendClickableNarrations(NarrationMessageBuilder builder) {
